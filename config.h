@@ -28,8 +28,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT_ID      0x6060
 #define DEVICE_VER      0x0004
 #define MANUFACTURER    Ortholinear Keyboards
-#define PRODUCT         The Planck Keyboard
-#define DESCRIPTION     A compact ortholinear keyboard
+#define PRODUCT         The Pete-Planck-HW Keyboard
+#define DESCRIPTION     Handwired edition
 
 #define RGB_DI_PIN D4     // The pin your RGB strip is wired to
 #define RGBLIGHT_TIMER    // Require for fancier stuff (not compatible with audio)
