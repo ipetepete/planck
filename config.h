@@ -1,3 +1,6 @@
+
+
+
 /*
 Copyright 2012 Jun Wako <wakojun@gmail.com>
 
@@ -23,21 +26,38 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0xFEED
 #define PRODUCT_ID      0x6060
+#define DEVICE_VER      0x0004
 #define MANUFACTURER    Ortholinear Keyboards
-#define PRODUCT         The Pete-Planck Keyboard
+#define PRODUCT         The Planck Keyboard
 #define DESCRIPTION     A compact ortholinear keyboard
+
+#define RGB_DI_PIN D4     // The pin your RGB strip is wired to
+#define RGBLIGHT_TIMER    // Require for fancier stuff (not compatible with audio)
+#define RGBLED_NUM 6     // Number of LEDs
+#define RGBLIGHT_HUE_STEP 10
+#define RGBLIGHT_SAT_STEP 17
+#define RGBLIGHT_VAL_STEP 17
 
 /* key matrix size */
 #define MATRIX_ROWS 4
 #define MATRIX_COLS 12
 
+//#define TAPPING_TERM 200
+
+/* Space cadet ish */
+#define RSPC_KEY KC_QUOT
+#define LSPO_KEY KC_4
+
 /* Planck PCB default pin-out */
-#define MATRIX_ROW_PINS { D0, D5, B5, B6 }
-#define MATRIX_COL_PINS { F1, F0, B0, C7, F4, F5, F6, F7, D4, D6, B4, D7 }
+//#define MATRIX_ROW_PINS { D0, D5, B5, B6 }
+//#define MATRIX_COL_PINS { F1, F0, B0, C7, F4, F5, F6, F7, D4, D6, B4, D7 }
+// AVOID GND, VCC, AREF & RST
+// USE PWM for leds
+#define MATRIX_ROW_PINS { F0, F1, F4, F5 }
+#define MATRIX_COL_PINS { B0, B1, B2, B3, D5, D1, D2, D3, F6, F7, B4, D7}
 #define UNUSED_PINS
 
-#define BACKLIGHT_PIN B7
-#define BACKLIGHT_BREATHING
+//#define BACKLIGHT_PIN B7
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
@@ -46,8 +66,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define MATRIX_HAS_GHOST
 
 /* number of backlight levels */
-#define BACKLIGHT_LEVELS 5
-#define PREVENT_STUCK_MODIFIERS
+#define BACKLIGHT_LEVELS 3
+//#define BACKLIGHT_BREATHING
 
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCING_DELAY 5
@@ -80,11 +100,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_MACRO
 //#define NO_ACTION_FUNCTION
 
-#ifdef SUBPROJECT_rev3
-    #include "rev3/config.h"
-#endif
-#ifdef SUBPROJECT_rev4
-    #include "rev4/config.h"
-#endif
 
 #endif
