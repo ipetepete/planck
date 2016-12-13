@@ -24,7 +24,7 @@ extern keymap_config_t keymap_config;
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
 #define _QWERTY 0
-#define _COLEMAK 1
+#define _WORKMAN 1
 #define _GAM3R 2
 #define _GAMUP 4
 #define _SPCFN 6
@@ -58,7 +58,7 @@ extern keymap_config_t keymap_config;
 
 enum planck_keycodes {
   QWERTY = SAFE_RANGE,
-  COLEMAK,
+  WORKMAN,
   GAM3R,
   GAMEUP,
   LOWER,
@@ -101,10 +101,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 },
 
 
-[_COLEMAK] = {
-  {KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC},
-  {CTLESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT},
-  {KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, SFT_T(KC_ENT) },
+[_WORKMAN] = {
+  {KC_TAB,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,    KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN, KC_BSPC},
+  {CTLESC,  KC_A,    KC_S,    KC_H,    KC_T,    KC_G,    KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    KC_QUOT},
+  {KC_LSFT, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    KC_K,    KC_L,    KC_COMM, KC_DOT,  KC_SLSH, SFT_T(KC_ENT) },
   {FUNC , KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPFN,  KC_SPFN,  RAISE,   KC_RGUI, KC_RALT,   KC_RCTL, FUNC   }
 },
 
@@ -140,7 +140,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_ADJUST] = {
   {RESET  , _______, _______, _______, RGBLED_TOGGLE, RGBLED_STEP_MODE, RGBLED_INCREASE_HUE, RGBLED_DECREASE_HUE, RGBLED_INCREASE_SAT, RGBLED_DECREASE_SAT, RGBLED_INCREASE_VAL, RGBLED_DECREASE_VAL},
-  {_______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, GAM3R, _______,  _______},
+  {_______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  WORKMAN, GAM3R, _______,  _______},
   {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______},
   {TOGRED , TOGGRN , _______, _______, _______, _______, _______, _______, _______, BL_TOGG, BL_DEC , BL_INC}
 },
@@ -170,7 +170,7 @@ HD_NOTE(_E6  ),
 float tone_startup[][2]    = SONG(COIN);
 float tone_qwerty[][2]     = SONG(QWERTY_SOUND);
 float tone_dvorak[][2]     = SONG(DVORAK_SOUND);
-float tone_colemak[][2]    = SONG(COLEMAK_SOUND);
+float tone_colemak[][2]    = SONG(WORKMAN_SOUND);
 float tone_plover[][2]     = SONG(PLOVER_SOUND);
 float tone_plover_gb[][2]  = SONG(PLOVER_GOODBYE_SOUND);
 float music_scale[][2]     = SONG(MUSIC_SCALE_SOUND);
@@ -196,13 +196,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case COLEMAK:
+    case WORKMAN:
       if (record->event.pressed) {
         #ifdef AUDIO_ENABLE
           PLAY_NOTE_ARRAY(tone_colemak, false, 0);
         #endif
           rgblight_mode(3);
-        persistant_default_layer_set(1UL<<_COLEMAK);
+        persistant_default_layer_set(1UL<<_WORKMAN);
       }
       return false;
       break;
