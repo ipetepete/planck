@@ -2,16 +2,11 @@
 // this is the style you want to emulate.
 
 #include "planck.h"
-#include "action_layer.h"
+//#include "action_layer.h"
 #ifdef AUDIO_ENABLE
   #include "audio.h"
 #endif
-#include "eeconfig.h"
-#include "led.h"
-#include "process_unicode.h"
-#include "emojis.h"
-#include "quantum.h"
-
+//#include "eeconfig.h"
 
 extern keymap_config_t keymap_config;
 
@@ -34,7 +29,7 @@ extern keymap_config_t keymap_config;
 #define KC_BKFN LT(_SPCFN, KC_BSPC)
 // use tap dancing to set caps lock
 #define TD_ESC 0
-#define HYPER MT(MOD_HYPR, KC_ENT)
+#define HYPER RCTL(RALT(RSFT(KC_RGUI)))
 #define KC_TABM LT(_MOUS, KC_TAB)
 #define APPTOG LGUI(KC_TAB)
 #define APPWIN LGUI(KC_GRV)
@@ -43,7 +38,7 @@ extern keymap_config_t keymap_config;
 #define SPCRGT LCTL(KC_RGHT)
 #define SPCLFT LCTL(KC_LEFT)
 #define ENTSFT SFT_T(KC_ENT)
-#define CTLESC CTL_T(KC_ESC)
+#define CTLESC RCTL_T(KC_ESC) //CTL_T(KC_ESC)
 #define VOLUP  S(LALT(KC_VOLU))
 #define VOLDN  S(LALT(KC_VOLD))
 #define POWER S(LCTL(KC_POWER))
@@ -79,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_TABM, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC},
   {CTLESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
   {KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, ENTSFT },
-  {FUNC, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPFN,  KC_SPFN,   RAISE,   KC_RGUI, KC_RALT, KC_RCTL, FUNC}
+  {FUNC, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPFN,  KC_SPFN,   RAISE,   KC_RGUI, KC_RALT, KC_RCTL, HYPER}
 },
 
 
@@ -110,14 +105,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LOWER] = {
   {APPTOG,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS, KC_EQL,  KC_BSPC},
   {APPWIN,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______},
-  {_______, _______, KC_LCBR, KC_LBRC, KC_LPRN, KC_PIPE, KC_BSLS, KC_LPRN, KC_LBRC, KC_LCBR, _______, _______}, 
+  {_______, _______, KC_LCBR, KC_LBRC, KC_LPRN, KC_PIPE, KC_BSLS, KC_LPRN, KC_LBRC, KC_LCBR, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY}
 },
 
 [_RAISE] = {
-  {LGUI(LSFT(KC_4)), _______, _______, _______, LGUI(KC_R), _______, _______, _______, X(CRY), X(GRIN), X(COOL), X(SKULL)},
-  {_______, LGUI(KC_A), LGUI(KC_S), LGUI(KC_D), _______, _______, _______, _______, X(THMUP), X(THMDN), X(VIC), X(CLAP)},
-  {_______, _______, _______, LGUI(KC_C), LGUI(KC_V), _______, _______, _______, _______, _______, _______, _______},
+  {LGUI(LSFT(KC_4)), _______, _______, _______, LGUI(KC_R), KC_LBRC, KC_RBRC, KC_7,  KC_8,  KC_9, KC_PLUS, _______},
+  {_______, LGUI(KC_A), LGUI(KC_S), LGUI(KC_D), _______,    KC_LCBR, KC_RCBR, KC_4,  KC_5,  KC_6, KC_MINS, _______},
+  {_______, _______, _______, LGUI(KC_C), LGUI(KC_V),       KC_LPRN, KC_RPRN, KC_1,  KC_2,  KC_3, KC_ASTR, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 },
 
@@ -162,14 +157,21 @@ void persistant_default_layer_set(uint16_t default_layer) {
 /*
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt){
   switch(id){
+    case 1:
+      if(record->event.pressed){
+        breathing_enable();
+      }
   }
+  return MACRO_NONE;
 }
 */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
       if (record->event.pressed) {
+#ifdef BACKLIGHT_BREATHING
         breathing_disable();
+#endif
         persistant_default_layer_set(1UL<<_QWERTY);
       }
       return false;
@@ -177,15 +179,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case COLEMAK:
       if (record->event.pressed) {
         persistant_default_layer_set(1UL<<_COLEMAK);
+#ifdef BACKLIGHT_BREATHING
         breathing_disable();
+#endif
       }
       return false;
       break;
     case GAM3R:
       if(record->event.pressed) {
+
+#ifdef BACKLIGHT_BREATHING
         breathing_speed_set(3);
         breathing_enable();
-
+#endif
         persistant_default_layer_set(1UL<<_GAM3R);
       }
       return false;
@@ -255,7 +261,5 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 void matrix_init_user(void) {
-  set_unicode_input_mode(UC_OSX);
+//  set_unicode_input_mode(UC_OSX);
 }
-
-
