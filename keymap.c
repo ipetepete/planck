@@ -46,7 +46,6 @@ extern keymap_config_t keymap_config;
 
 enum planck_keycodes {
   QWERTY = SAFE_RANGE,
-  COLEMAK,
   GAM3R,
   GAMEUP,
   LOWER,
@@ -76,16 +75,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, ENTSFT },
   {FUNC, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPFN,  KC_SPFN,   RAISE,   KC_RGUI, KC_RALT, KC_RCTL, HYPER}
 },
-
-
-[_COLEMAK] = {
-  {KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC},
-  {KC_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT},
-  {KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, ENTSFT},
-  {FUNC , KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPFN,  KC_SPFN,  RAISE,   KC_RGUI, KC_RALT,   KC_RCTL, FUNC }
-
-},
-
 
 [_GAM3R] = {
   {KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC},
@@ -118,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_ADJUST] = {
   {RESET  , _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______},
-  {_______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, GAM3R, _______,  _______},
+  {_______, _______, _______, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  GAM3R,   _______,  _______,  _______},
   {_______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ }
 },
@@ -132,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 [_SPCFN] = {
-  {KC_TILD, _______, _______, KC_PGUP, _______, KC_LBRC, KC_RBRC, SRTLIN , KC_UP  , ENDLIN , KC_PGUP, KC_DEL  },
+  {KC_TILD, _______, KC_HOME, KC_PGUP, KC_END , KC_LBRC, KC_RBRC, SRTLIN , KC_UP  , ENDLIN , KC_PGUP, KC_DEL  },
   {KC_GRV,  _______, SPCLFT , KC_PGDN, SPCRGT , KC_LCBR, KC_RCBR, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, _______ },
   {_______, _______, _______, _______, _______, KC_LPRN, KC_RPRN, _______, _______, _______, _______, _______ },
   {BL_TOGG, BL_STEP, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______ }
@@ -173,15 +162,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         breathing_disable();
 #endif
         persistant_default_layer_set(1UL<<_QWERTY);
-      }
-      return false;
-      break;
-    case COLEMAK:
-      if (record->event.pressed) {
-        persistant_default_layer_set(1UL<<_COLEMAK);
-#ifdef BACKLIGHT_BREATHING
-        breathing_disable();
-#endif
       }
       return false;
       break;
