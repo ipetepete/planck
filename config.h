@@ -15,20 +15,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef CONFIG_USER_H
+#define CONFIG_USER_H
 
 #include "config_common.h"
 
 //#include "led.h"
 //#include "quantum.h"
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0xFEED
-#define PRODUCT_ID      0x6060
-#define MANUFACTURER    Ortholinear Keyboards
-#define PRODUCT         The Pete-Planck Keyboard
-#define DESCRIPTION     A compact ortholinear keyboard
 
 /* key matrix size */
 #define MATRIX_ROWS 4
@@ -41,7 +35,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define BACKLIGHT_PIN B7
 #define BACKLIGHT_BREATHING
-
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
@@ -49,7 +42,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define MATRIX_HAS_GHOST
 
 /* number of backlight levels */
+#ifndef BACKLIGHT_LEVELS
 #define BACKLIGHT_LEVELS 5
+#endif
 #define PREVENT_STUCK_MODIFIERS
 
 /* Set 0 if debouncing isn't needed */
